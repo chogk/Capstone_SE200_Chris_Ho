@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String  @unique
+  access_token      String?
+  expires_at        Int?
+  refresh_token     String?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Insurance_Policy {
+  id                  String                @id
+  name                String
+  base_price_sgd      Decimal               @default(0.00) @db.Decimal(10, 2)
+  type_of_policy_id   Int
+  policy_Type         policy_Type           @relation(fields: [type_of_policy_id], references: [id])
+  Policy_Subscription Policy_Subscription[]
+
+  PolicyOnPolicies PolicyOnPolicies[]
+}
+
+model Policy_Holder {
+  id                  String                @id
+  email               String                @unique
+  firstName           String
+  lastName            String
+  Policy_Subscription Policy_Subscription[]
+}
+
+model Policy_Subscription {
+  policy_holder_id    String
+  insurance_policy_id String
+  Insurance_Policy    Insurance_Policy @relation(fields: [insurance_policy_id], references: [id])
+  Policy_Holder       Policy_Holder    @relation(fields: [policy_holder_id], references: [id])
+
+  purchasedAt DateTime @default(now())
+
+  @@id([policy_holder_id, insurance_policy_id])
+}
+
+model policy_Type {
+  id               Int                @id(map: "Policy_Type_pkey") @default(autoincrement())
+  type_of_policy   String             @unique(map: "Policy_Type_type_of_policy_key")
+  // Insurance_Policy Insurance_Policy[]
+  policies         Insurance_Policy[]
+  PolicyOnPolicies PolicyOnPolicies[]
+}
+
+model PolicyOnPolicies {
+  insurance_policy_id String
+  policy_type_id      Int
+
+  insurancePolicy Insurance_Policy @relation(fields: [insurance_policy_id], references: [id])
+  policyType      policy_Type      @relation(fields: [policy_type_id], references: [id])
+
+  @@id([insurance_policy_id, policy_type_id]) // Composite PK
+}
+
+model Users {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  password      String?
+  createdAt     DateTime        @default(now())
+  emailVerified DateTime?
+  image         String?
+  name          String?
+  updatedAt     DateTime        @updatedAt
+  accounts      Account[]
+  
+}
