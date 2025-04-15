@@ -55,7 +55,69 @@ This will install all required libraries and dependencies.
 
 ---
 
-### ⚙️ Step 4: Start the Development Server
+## 🛠️ Setting Up PostgreSQL and Prisma
+
+If your project uses a PostgreSQL database and Prisma ORM, follow these extra steps.
+
+---
+
+### 🐘 Step 1: Install PostgreSQL
+
+1. **Download PostgreSQL** from the official site: [https://www.postgresql.org/download/](https://www.postgresql.org/download/)
+2. **During installation**, set a password for the default user (usually `postgres`). Remember this password.
+
+---
+
+### 🗄️ Step 2: Create a Database
+
+After installing PostgreSQL, open **pgAdmin** or use the terminal:
+
+```sql
+CREATE DATABASE insurance_app;
+```
+
+---
+
+### 📄 Step 3: Configure Environment Variables
+
+In the root of your project, create a `.env` file with this line (edit values accordingly):
+
+```
+DATABASE_URL="postgresql://postgres:<your-password>@localhost:5432/insurance_app"
+```
+
+Replace `<your-password>` with your actual PostgreSQL password.
+
+---
+
+### 🔍 Step 4: View Database (Optional)
+
+Use tools like **pgAdmin**, **TablePlus**, or **Prisma Studio**:
+
+```bash
+npx prisma studio
+```
+
+This opens a web interface to explore your database.
+
+---
+
+You're now fully set up with both the frontend (Next.js) and backend (PostgreSQL + Prisma)! 🚀
+
+### 🔄 Step 5: Set Up Prisma
+
+Run the following commands to initialize the database and apply the schema:
+
+```bash
+npx prisma generate
+npx prisma migrate dev --name init
+```
+
+This will create the tables in your PostgreSQL database based on the schema defined in `prisma/schema.prisma`.
+
+---
+
+### ⚙️ Step 6: Start the Development Server
 
 ```
 npm run dev
@@ -69,7 +131,7 @@ Local: http://localhost:3000
 
 ---
 
-### 🌐 Step 5: Open the Website
+### 🌐 Step 7: Open the Website
 
 Go to your browser and open:
 
@@ -100,68 +162,6 @@ You can now explore and modify files in the `app/` or `components/` folders.
 - ❌ **Permission errors** – Try using `sudo` (macOS/Linux).
 
 ---
-
-## 🛠️ Setting Up PostgreSQL and Prisma
-
-If your project uses a PostgreSQL database and Prisma ORM, follow these extra steps.
-
----
-
-### 🐘 Step 6: Install PostgreSQL
-
-1. **Download PostgreSQL** from the official site: [https://www.postgresql.org/download/](https://www.postgresql.org/download/)
-2. **During installation**, set a password for the default user (usually `postgres`). Remember this password.
-
----
-
-### 🗄️ Step 7: Create a Database
-
-After installing PostgreSQL, open **pgAdmin** or use the terminal:
-
-```sql
-CREATE DATABASE insurance_app;
-```
-
----
-
-### 📄 Step 8: Configure Environment Variables
-
-In the root of your project, create a `.env` file with this line (edit values accordingly):
-
-```
-DATABASE_URL="postgresql://postgres:<your-password>@localhost:5432/insurance_app"
-```
-
-Replace `<your-password>` with your actual PostgreSQL password.
-
----
-
-### 🔄 Step 9: Set Up Prisma
-
-Run the following commands to initialize the database and apply the schema:
-
-```bash
-npx prisma generate
-npx prisma migrate dev --name init
-```
-
-This will create the tables in your PostgreSQL database based on the schema defined in `prisma/schema.prisma`.
-
----
-
-### 🔍 Step 10: View Database (Optional)
-
-Use tools like **pgAdmin**, **TablePlus**, or **Prisma Studio**:
-
-```bash
-npx prisma studio
-```
-
-This opens a web interface to explore your database.
-
----
-
-You're now fully set up with both the frontend (Next.js) and backend (PostgreSQL + Prisma)! 🚀
 
 ## 🎨 Setting Up shadcn/ui Components
 
