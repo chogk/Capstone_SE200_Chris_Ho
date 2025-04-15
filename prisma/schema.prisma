@@ -90,15 +90,4 @@ model PolicyOnPolicies {
   @@id([insurance_policy_id, policy_type_id]) // Composite PK
 }
 
-model Users {
-  id            String          @id @default(cuid())
-  email         String          @unique
-  password      String?
-  createdAt     DateTime        @default(now())
-  emailVerified DateTime?
-  image         String?
-  name          String?
-  updatedAt     DateTime        @updatedAt
-  accounts      Account[]
-  
-}
+
