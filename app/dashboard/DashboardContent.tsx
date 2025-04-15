@@ -19,8 +19,17 @@ type Stats = {
   sales: { name: string; month_order: string; total: number }[];
 };
 
-export default function DashboardContent({ userEmail }: { userEmail: string }) {
+type Props = {
+  userEmail: string;
+  userName: string;
+};
 
+// export default function DashboardContent({ userEmail }: { userEmail: string }) {
+  export default function DashboardContent({ userEmail, userName }: Props) {
+    
+  const exportCSV = () => {
+      const csvContent = "data:text/csv;charset=utf-8,Name,Email\n" +
+                         `${userName},${userEmail}`};
   
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(new Date().getFullYear(), 0, 1),
@@ -44,6 +53,7 @@ export default function DashboardContent({ userEmail }: { userEmail: string }) {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
+    
 
     link.setAttribute('href', url);
     link.setAttribute('download', `monthly_sales_${format(new Date(), 'yyyy-MM-dd')}.csv`);
@@ -93,7 +103,8 @@ export default function DashboardContent({ userEmail }: { userEmail: string }) {
   }, [])
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="pt-1 p-4 space-y-6">
+      {/* <h1 className="text-4xl font-bold mt-0 mb-5">Hi, {userName} 👋</h1> */}
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Dashboard</h1>
         <div className="flex items-center space-x-2">

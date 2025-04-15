@@ -1,27 +1,45 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { GitHub } from 'lucide-react';
-import { signIn } from 'next-auth/react';
-import { useState } from 'react';
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Github } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import Link from 'next/link';
 
+export default function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
 
-export default function AuthPage() {
-  const [email, setEmail] = useState('');
+  const handleSignup = async () => {
+    setLoading(true);
+    setError("");
 
-  const handleEmailLogin = async () => {
-    await signIn('email', { email });
+    const res = await fetch("/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (!res.ok) {
+      setError(data.error || "Signup failed");
+      return;
+    }
+
+    // Redirect to login page after successful signup
+    router.push("/login");
   };
 
   return (
     <div className="flex h-screen">
-      {/* Login Link */}
-      <Link href="/login" className="absolute top-6 right-8 text-gray-600 hover:underline">
-        Login
-      </Link>
-
       {/* Left Section */}
       <div className="hidden md:flex flex-col justify-between w-1/2 bg-black text-white p-10">
         <div className="text-lg font-bold">Acme Inc</div>
@@ -34,40 +52,54 @@ export default function AuthPage() {
       </div>
 
       {/* Right Section */}
-      <div className="w-1/2 flex items-center justify-center">
-        <div className="w-full max-w-md p-8 border rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-center">Create an account</h2>
-          <p className="text-gray-600 text-center mt-2">Enter your email below to create your account</p>
+      <div className="flex justify-center items-center w-full md:w-1/2 p-6">
+        <Card className="w-full max-w-md shadow-lg">
+          <CardContent className="p-6 space-y-6">
+            <h2 className="text-2xl font-semibold text-center">Create an account</h2>
+            <p className="text-gray-500 text-center">
+              Enter your email below to create your account
+            </p>
 
-          <Input
-            type="email"
-            placeholder="name@example.com"
-            className="mt-4"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Button className="w-full mt-4" onClick={handleEmailLogin}>
-            Sign In with Email
-          </Button>
+            {error && <p className="text-red-500 text-center">{error}</p>}
 
-          <div className="flex items-center my-4">
-            <hr className="flex-grow border-gray-300" />
-            <span className="mx-2 text-gray-500 text-xs">OR CONTINUE WITH</span>
-            <hr className="flex-grow border-gray-300" />
-          </div>
+            <div className="space-y-4">
+              <Input
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                className="w-full bg-black text-white"
+                onClick={handleSignup}
+                disabled={loading}
+              >
+                {loading ? "Signing up..." : "Sign Up with Email"}
+              </Button>
+            </div>
 
-          <Button
-            className="w-full flex items-center justify-center bg-gray-900 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-800"
-            onClick={() => signIn('github')}
-          >
-            <GitHub className="mr-0.1 h-5 w-5" />
-            GitHub
-          </Button>
+            <div className="text-center text-gray-500">OR CONTINUE WITH</div>
 
-          <p className="text-center text-gray-500 text-sm mt-4">
-            By clicking continue, you agree to our <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
-          </p>
-        </div>
+            <Button
+              className="w-full bg-gray-100 hover:bg-gray-200 text-black flex items-center justify-center gap-2"
+              onClick={() => signIn("github")}
+            >
+              GitHub
+            </Button>
+
+            <p className="text-center text-sm text-gray-500">
+              By clicking continue, you agree to our{" "}
+              <a href="../terms" className="underline">Terms of Service</a> and{" "}
+              <a href="../privacy" className="underline">Privacy Policy</a>.
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

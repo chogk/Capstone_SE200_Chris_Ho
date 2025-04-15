@@ -12,7 +12,22 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 
-export default function TopNav() {
+type Props = {
+  userName: string;
+  userImage?: string;
+};
+
+export default function TopNav({ userName, userImage }: Props) {
+
+   //To show the initials of the Names
+  const initials = userName
+  ? userName
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase()
+  : "U";
+
   return (
     <div className="flex justify-between items-center h-14 px-6 border-b bg-gray-200">
       <Link href="/add_policy" className="ml-14 mt-5">
@@ -25,7 +40,17 @@ export default function TopNav() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex h-9 w-9 items-center justify-center mt-5 rounded-full bg-accent text-black">
-            <User className="h-5 w-5" />
+            {userImage ? (
+              <img
+                src={userImage}
+                alt="Profile"
+                className="h-full w-full object-cover rounded-full border border-gray-300"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center rounded-full bg-black text-white font-bold text-sm">
+                {initials}
+              </div>
+            )}
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

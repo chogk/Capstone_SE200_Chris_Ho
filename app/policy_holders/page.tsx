@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth1";
 import { redirect } from "next/navigation";
 import PolicyHoldersContent from "./PolicyHoldersContent"; // import client-side UI logic
 

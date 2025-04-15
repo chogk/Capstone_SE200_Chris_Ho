@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from 'next/link';
 
 export default function SignupPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export default function SignupPage() {
     const res = await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ name, email, password }),
     });
 
     const data = await res.json();
@@ -63,6 +64,12 @@ export default function SignupPage() {
             {error && <p className="text-red-500 text-center">{error}</p>}
 
             <div className="space-y-4">
+              <Input
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+             />
               <Input
                 type="email"
                 placeholder="name@example.com"
