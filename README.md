@@ -123,12 +123,6 @@ This will create the tables in your PostgreSQL database based on the schema defi
 npm run dev
 ```
 
-You should see a message like:
-
-```
-Local: http://localhost:3000
-```
-
 ---
 
 ### 🌐 Step 7: Open the Website
@@ -155,21 +149,13 @@ You can now explore and modify files in the `app/` or `components/` folders.
 
 ---
 
-### 🧼 Troubleshooting
-
-- ❌ **npm: command not found** – Make sure Node.js is installed.
-- ❌ **Port 3000 already in use** – Close the other app or run with `npm run dev -- -p 3001`.
-- ❌ **Permission errors** – Try using `sudo` (macOS/Linux).
-
----
-
 ## 🎨 Setting Up shadcn/ui Components
 
 This project uses `shadcn/ui` for modern and customizable UI components.
 
 ---
 
-### 🎯 Step 11: Install shadcn/ui
+### 🎯 Step 1: Install shadcn/ui
 
 Run the following command to initialize `shadcn/ui`:
 
@@ -181,7 +167,7 @@ You’ll be prompted to answer a few setup questions (e.g., framework = React, s
 
 ---
 
-### 🧩 Step 12: Add Components
+### 🧩 Step 2: Add Components
 
 To add a component (e.g., Button, Input, Card), run:
 
@@ -212,6 +198,16 @@ import { Button } from "@/components/ui/button";
 ---
 
 shadcn/ui makes it super easy to build fast and beautiful UIs with Tailwind CSS. 🌟
+
+---
+
+### 🧼 Troubleshooting
+
+- ❌ **npm: command not found** – Make sure Node.js is installed.
+- ❌ **Port 3000 already in use** – Close the other app or run with `npm run dev -- -p 3001`.
+- ❌ **Permission errors** – Try using `sudo` (macOS/Linux).
+
+---
 
 Happy Coding!
 
