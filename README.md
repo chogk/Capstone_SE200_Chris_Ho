@@ -10,6 +10,8 @@ This project is a Next.js 14 web application styled with Tailwind CSS and built 
 - Manage policy holders and their subscriptions
 - Pagination, sorting, filtering
 - Clean and responsive UI using shadcn/ui + Tailwind CSS
+- Upload profile image to the Postgresql database and appear at the profile icon
+- If no profile icon, it will show the initials of the name of the user
 
 ## 🚀 Getting Started for Beginners
 
