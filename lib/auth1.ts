@@ -1,6 +1,7 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
+import { prisma } from "@/lib/db"
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -26,7 +27,10 @@ export const authOptions: AuthOptions = {
 
   callbacks: {
     async session({ session, token }) {
-      session.user.image = token.picture as string || "/default-avatar.png"
+      const user = await prisma.user.findUnique({
+        where: { email: token.email },
+      })
+      session.user.image = user?.image || "/default-avatar.png"
       return session
     },
     async jwt({ token }) {

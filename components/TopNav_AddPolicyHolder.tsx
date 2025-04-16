@@ -62,9 +62,14 @@ export default function TopNav({ userName, userImage }: Props) {
                 Profile Image
             </Link>
         </DropdownMenuItem> 
-          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
+        <DropdownMenuItem asChild>
+            <Link href="/my-account/change-password" className="text-black">
+                Change Password
+            </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
             Log Out
-          </DropdownMenuItem>
+        </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

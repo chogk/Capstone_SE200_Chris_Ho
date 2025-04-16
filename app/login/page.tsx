@@ -1,16 +1,25 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams  } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("")
   const router = useRouter();
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const msg = searchParams.get("message")
+    if (msg === "password-updated") {
+      setMessage("Password changed successfully. Please log in again.")
+    }
+  }, [searchParams])
 
   const handleEmailLogin = async () => {
     const result = await signIn("credentials", {
@@ -23,6 +32,10 @@ export default function LoginPage() {
       alert("Invalid credentials!");
     } else {
       router.push("/dashboard");
+    }
+
+    if (message === "password-updated") {
+      toast.success("Password changed. Please log in again.")
     }
   };
 

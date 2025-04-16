@@ -10,8 +10,13 @@ This project is a Next.js 14 web application styled with Tailwind CSS and built 
 - Manage policy holders and their subscriptions
 - Pagination, sorting, filtering
 - Clean and responsive UI using shadcn/ui + Tailwind CSS
-- Upload profile image to the Postgresql database and appear at the profile icon
+- Upload profile image to the Postgresql database and after 3 sec, it will return to the dashboard page  
+  and the new image will appear at the profile icon
 - If no profile icon, it will show the initials of the name of the user
+- Setup reset password function for the user to change password
+- Dashboard to show total customers, total policies and total sales by month
+- Dashboard date filter to select from which month to which month and the respective month sales will appear at the dashboard
+- Allows the user to download the entire total sales and months in CSV format
 
 ## 🚀 Getting Started for Beginners
 
