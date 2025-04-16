@@ -23,6 +23,25 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
+
+  callbacks: {
+    async session({ session, token }) {
+      session.user.image = token.picture as string || "/default-avatar.png"
+      return session
+    },
+    async jwt({ token }) {
+      if (token?.email) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email },
+        })
+        if (dbUser?.image) {
+          token.picture = dbUser.image
+        }
+      }
+      return token
+    },
+  },
+  
   pages: {
     signIn: "/login",
   },

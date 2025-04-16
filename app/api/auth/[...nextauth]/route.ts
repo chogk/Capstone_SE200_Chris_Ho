@@ -9,6 +9,8 @@ const prisma = new PrismaClient();
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
+  
+  
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -42,6 +44,27 @@ export const authOptions = {
       },
     }),
   ],
+
+  callbacks: {
+    async session({ session, token }) {
+      if (token?.picture) {
+        session.user.image = token.picture as string
+      } else {
+        session.user.image = "/default-avatar.png" // fallback
+      }
+      return session
+    },
+    async jwt({ token, user }) {
+      // First login — user info is available
+      if (user && user.image) {
+        token.picture = user.image
+      }
+  
+      return token
+    },
+  },
+
+
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
 };

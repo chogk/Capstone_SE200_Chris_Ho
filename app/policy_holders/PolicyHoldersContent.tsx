@@ -47,7 +47,7 @@ export default function PolicyHoldersContent({ userEmail }: { userEmail: string 
       <table className="w-full border-collapse border">
         <thead>
           <tr>
-            <th className="border p-2">NRIC</th>
+            <th className="border p-2">Policy Holder ID</th>
             <th className="border p-2">Email</th>
             <th className="border p-2">First Name</th>
             <th className="border p-2">Last Name</th>

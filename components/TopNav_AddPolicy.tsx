@@ -54,10 +54,15 @@ export default function TopNav({ userName, userImage }: Props) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem disabled>
-            <div className="text-black">My Account</div>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <div className="text-black font-bold cursor-default">My Account</div>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+                  <Link href="/my-account" className="text-black">
+                      Profile Image
+                  </Link>
+        </DropdownMenuItem> 
+        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
             Log Out
           </DropdownMenuItem>
         </DropdownMenuContent>

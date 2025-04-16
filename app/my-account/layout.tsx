@@ -14,9 +14,8 @@ export default async function PoliciesLayout({ children }: { children: React.Rea
   return (
     <div className="bg-gray-200">
       <Sidebar />
-      <TopNav_WithoutAddheader userName={session.user?.name || "User"} 
-                              userImage={session.user?.image || "/default-avatar.png"}
-      />
+      <TopNav_WithoutAddheader userName={session.user?.name || ""}
+                              userImage={session.user?.image || ""}/>
 
       {/* Main content */}
       <div className="sm:ml-14 p-6">
