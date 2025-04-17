@@ -8,7 +8,7 @@ const Sidebar = () => {
   const navItems = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/policies', label: 'Policies', icon: FileText },
-    { href: '/customers', label: 'Customers', icon: Users },
+    { href: '/customers', label: 'Policy Holder', icon: Users },
   ];
 
   return (

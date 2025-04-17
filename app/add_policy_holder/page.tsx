@@ -17,7 +17,7 @@ type InsurancePolicy = {
 }
 
 const formSchema = z.object({
-  id: z.string().min(5, 'NRIC is required'),
+  id: z.string().min(5, 'Policy Holder ID is required'),
   email: z.string().email('Invalid email'),
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
@@ -102,7 +102,7 @@ export default function AddPolicyHolderForm() {
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-[200px,1fr] items-center gap-4">
-          <Label htmlFor="id" className="text-base font-bold">NRIC</Label>
+          <Label htmlFor="id" className="text-base font-bold">Policy Holder ID</Label>
           <div>
             <Input 
               id="id" 

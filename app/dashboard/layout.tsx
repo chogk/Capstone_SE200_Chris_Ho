@@ -1,27 +1,19 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth1";
 import { redirect } from "next/navigation";
-import Sidebar from "@/components/Sidebar";
-import TopNav_WithoutAddheader from "@/components/TopNav_WithoutAddheader";
+import DashboardShell from "@/components/DashboardShell"; // New split component
 
-
-export default async function PoliciesLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
+
   if (!session) {
-    redirect("/login");
+    redirect('/login');
   }
 
   return (
-    <div className="bg-gray-200">
-      <Sidebar />
-      <TopNav_WithoutAddheader userName={session.user?.name || "User"} 
-                              userImage={session.user?.image || "/default-avatar.png"}
-      />
-
-      {/* Main content */}
-      <div className="sm:ml-14 p-6">
-        {children}
-      </div>
-    </div>
+    <DashboardShell userName={session.user?.name || ''} userImage={session.user?.image || ''}>
+      {children}
+    </DashboardShell>
   );
 }
+

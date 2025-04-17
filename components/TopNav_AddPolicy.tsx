@@ -1,77 +1,49 @@
-"use client";
+'use client';
 
-import { signOut } from "next-auth/react";
-import Link from "next/link";
-import { GoPlusCircle } from "react-icons/go";
-import { Button } from "@/components/ui/button";
-import { User } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+import { Menu } from 'lucide-react';
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Image from "next/image";
 
-type Props = {
-  userName: string;
-  userImage?: string;
-};
-
-export default function TopNav({ userName, userImage }: Props) {
-
-   //To show the initials of the Names
-  const initials = userName
-  ? userName
-      .split(" ")
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase()
-  : "U";
+export default function TopNav_AddPolicy({ userName, userImage }: { userName: string; userImage: string }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <div className="flex justify-between items-center h-14 px-6 border-b bg-gray-200">
-      <Link href="/add_policy" className="ml-14 mt-5">
-        <Button className="bg-black text-white hover:bg-gray-800">
-          <GoPlusCircle className="w-4 h-4 mr-2" />
-          Add Policy
-        </Button>
-      </Link>
+    <div className="flex items-center justify-between w-full px-4 h-16 bg-gray-200 border-b shadow-md">
+      {/* Left side: Burger + Page Title */}
+      <div className="flex items-center gap-2">
+        {/* Burger button only on mobile */}
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="sm:hidden focus:outline-none"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="flex h-9 w-9 items-center justify-center mt-5 rounded-full bg-accent text-black">
-            {userImage ? (
-              <img
-                src={userImage}
-                alt="Profile"
-                className="h-full w-full object-cover rounded-full border border-gray-300"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-full bg-black text-white font-bold text-sm">
-                {initials}
-              </div>
-            )}
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <div className="text-black font-bold cursor-default">My Account</div>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-                  <Link href="/my-account" className="text-black">
-                      Profile Image
-                  </Link>
-        </DropdownMenuItem> 
-        <DropdownMenuItem asChild>
-                    <Link href="/my-account/change-password" className="text-black">
-                        Change Password
-                    </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
-            Log Out
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        {/* Page Title */}
+        <h1 className="text-lg font-semibold hidden sm:block">
+          {pathname === '/add_policy' ? 'Add Policy' : ''}
+        </h1>
+      </div>
+
+      {/* Right side: Profile Image */}
+      <div className="ml-auto flex items-center gap-3">
+        {userImage ? (
+          <Image
+            src={userImage}
+            alt="Profile"
+            width={32}
+            height={32}
+            className="rounded-full object-cover"
+          />
+        ) : (
+          <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white">
+            {userName ? userName.charAt(0).toUpperCase() : "U"}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+

@@ -1,26 +1,29 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth1";
 import { redirect } from "next/navigation";
-import Sidebar from "@/components/Sidebar";
-import TopNav_AddPolicyHolder from "@/components/TopNav_AddPolicyHolder";
+import DashboardShell from "@/components/DashboardShell";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-
-export default async function PoliciesLayout({ children }: { children: React.ReactNode }) {
+export default async function PolicyHoldersLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }
 
   return (
-    <div className="bg-gray-200">
-      <Sidebar />
-      <TopNav_AddPolicyHolder userName={session.user?.name || ""}
-                            userImage={session.user?.image || ""}/>
-
-      {/* Main content */}
-      <div className="sm:ml-14 p-6">
-        {children}
-      </div>
-    </div>
+    <DashboardShell
+      userName={session.user?.name || ""}
+      userImage={session.user?.image || ""}
+      actions={
+        <Link href="/add_policy_holder">
+          <Button className="bg-black text-white hover:bg-gray-900">
+            Add Policy Holder
+          </Button>
+        </Link>
+      }
+    >
+      {children}
+    </DashboardShell>
   );
 }

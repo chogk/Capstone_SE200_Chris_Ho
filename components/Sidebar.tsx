@@ -26,7 +26,7 @@ export default function Sidebar() {
                   <Wallet className="h-5 w-5" />
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Policies</TooltipContent>
+              <TooltipContent side="right">Policy</TooltipContent>
             </Tooltip>
 
             <Tooltip>
@@ -35,7 +35,7 @@ export default function Sidebar() {
                   <Users2 className="h-5 w-5" />
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Customers</TooltipContent>
+              <TooltipContent side="right">Policy Holder</TooltipContent>
             </Tooltip>
           </nav>
         </aside>

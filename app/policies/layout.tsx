@@ -1,9 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth1";
 import { redirect } from "next/navigation";
-import Sidebar from "@/components/Sidebar";
-import TopNav_AddPolicy from "@/components/TopNav_AddPolicy";
-
+import DashboardShell from "@/components/DashboardShell"; // Import correct layout
 
 export default async function PoliciesLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -12,16 +10,13 @@ export default async function PoliciesLayout({ children }: { children: React.Rea
   }
 
   return (
-    <div className="bg-gray-200">
-      <Sidebar />
-      <TopNav_AddPolicy userName={session.user?.name || ""}
-                        userImage={session.user?.image || ""} />
-
-      {/* Main content */}
-      <div className="sm:ml-14 p-6">
-        {children}
-      </div>
-    </div>
+    <DashboardShell
+      userName={session.user?.name || ""}
+      userImage={session.user?.image || ""}
+    >
+      {children}
+    </DashboardShell>
   );
 }
+
 
