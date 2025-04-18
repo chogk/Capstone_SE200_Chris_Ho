@@ -83,7 +83,7 @@ export default function AddPolicyForm() {
       </div>
 
       <div className='pt-4'>
-        <Label>Name</Label>
+        <Label>New Policy Name</Label>
         <Input {...register('name')} />
         {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
       </div>
