@@ -102,7 +102,7 @@ export default function AddPolicyHolderForm() {
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-[200px,1fr] items-center gap-4">
-          <Label htmlFor="id" className="text-base font-bold">Policy Holder ID</Label>
+          <Label htmlFor="id" className="text-base font-bold">New Holder ID</Label>
           <div>
             <Input 
               id="id" 
